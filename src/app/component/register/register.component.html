@@ -1,7 +1,16 @@
-<div class="container-fluid page-color">
+<div class="row justify-content-center">
+  <div class="col col-lg-6">
     <form class="mx-auto">
       <h4 class="text-center">Register</h4>
-      <div class="mb-3 mt-5">
+      <div class="mb-3">
+        <label for="first_name" class="form-label">FirstName</label>
+        <input type="text" class="form-control" id="first_name">
+      </div>
+      <div class="mb-3">
+        <label for="last_name" class="form-label">LastName</label>
+        <input type="text" class="form-control" id="last_name">
+      </div>
+      <div class="mb-3">
         <label for="email" class="form-label">Email address</label>
         <input type="email" class="form-control" id="email">
       </div>
@@ -9,10 +18,13 @@
         <label for="password" class="form-label">Password</label>
         <input type="password" class="form-control" id="password">
       </div>
-      <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      <div class="mb-3">
+        <label for="password_confirm" class="form-label">Password Confirm</label>
+        <input type="password" class="form-control" id="password_confirm">
       </div>
-      <button type="submit" class="btn btn-primary mt-5">Submit</button>
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <button type="submit" class="btn btn-primary">Register</button>
+      </div>
     </form>
   </div>
+</div>

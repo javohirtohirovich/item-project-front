@@ -1,87 +1,151 @@
 <div class="container mt-5">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button class="btn btn-success me-md-2" (click)="showAddModal()" type="button">Add</button>
+    </div>
     <form class="mx-auto justify-content-center">
-        <div class="table-responsive">
+        <div>
             <table class="table table-bordered table-striped">
                 <thead class="table-dark">
                     <tr>
                         <th class="col-1">#</th>
+                        <th class="col-2 col-md-2">Id</th>
                         <th class="col-2 col-md-2">Name</th>
-                        <th class="col-2 col-md-2">Surname</th>
-                        <th class="col-2 col-md-2">Age</th>
-                        <th class="col-3 col-md-2">Job</th>
+                        <th class="col-2 col-md-2">Date</th>
+                        <th class="col-3 col-md-2">Type</th>
                         <th class="col-2 col-md-2">Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
                     <tr>
                         <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>40</td>
-                        <td>Teacher</td>
-                        <td class="d-flex justify-content-center" >
-                            <div class="d-grid gap-2 d-md-block">
-                                <button class="btn btn-outline-warning m-1">
-                                    Edit
-                                </button>
-                                <button class="btn btn-outline-danger ">
-                                    Delete
-                                </button>
-                            </div>
-    
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>40</td>
-                        <td>Teacher</td>
-                        <td class="d-flex justify-content-center" >
-                            <div class="d-grid gap-2 d-md-block">
-                                <button class="btn btn-outline-warning m-1">
-                                    Edit
-                                </button>
-                                <button class="btn btn-outline-danger ">
-                                    Delete
-                                </button>
-                            </div>
-    
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>40</td>
-                        <td>Teacher</td>
+                        <td>23</td>
+                        <td>computer</td>
+                        <td>10/10/2023</td>
+                        <td>Asus</td>
                         <td class="d-flex justify-content-center">
                             <div class="d-grid gap-2 d-md-block">
-                                <button class="btn btn-outline-warning m-1">
+                                <button type="button" (click)="showEditModal()" class="btn btn-outline-warning m-1">
                                     Edit
                                 </button>
-                                <button class="btn btn-outline-danger ">
+                                <button type="button" (click)="showDeleteModal()" class="btn btn-outline-danger ">
                                     Delete
                                 </button>
                             </div>
-    
+
+                        </td>
+                    </tr>
+                     <tr>
+                        <th scope="row">1</th>
+                        <td>23</td>
+                        <td>computer</td>
+                        <td>10/10/2023</td>
+                        <td>Asus</td>
+                        <td class="d-flex justify-content-center">
+                            <div class="d-grid gap-2 d-md-block">
+                                <button type="button" (click)="showEditModal()" class="btn btn-outline-warning m-1">
+                                    Edit
+                                </button>
+                                <button type="button" (click)="showDeleteModal()" class="btn btn-outline-danger ">
+                                    Delete
+                                </button>
+                            </div>
+
+                        </td>
+                    </tr>
+                     <tr>
+                        <th scope="row">1</th>
+                        <td>23</td>
+                        <td>computer</td>
+                        <td>10/10/2023</td>
+                        <td>Asus</td>
+                        <td class="d-flex justify-content-center">
+                            <div class="d-grid gap-2 d-md-block">
+                                <button type="button" (click)="showEditModal()"  class="btn btn-outline-warning m-1">
+                                    Edit
+                                </button>
+                                <button type="button" (click)="showDeleteModal()"  class="btn btn-outline-danger ">
+                                    Delete
+                                </button>
+                            </div>
+
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
-              <li class="page-item disabled">
-                <a class="page-link">Previous</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
+                <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
             </ul>
-          </nav>
+        </nav>
+        
     </form>
 </div>
+<div *ngIf="modalDeleteVisible" class="modal" tabindex="-1" style="display: block;" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete Item</h5>
+          <button type="button" (click)="hideDeleteModal()" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Do you want to delete the item?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="saveDeleteChanges()" class="btn btn-primary">Delete</button>
+          <button type="button" (click)="hideDeleteModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="modalEditVisible" class="modal" tabindex="-1" style="display: block;" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Item</h5>
+          <button type="button" (click)="hideEditModal()" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <app-edit></app-edit>
+        </div>
+        <div class="modal-footerd-grid d-grid gap-2 d-md-flex justify-content-md-center">
+          <button type="button" (click)="saveEditChanges()" class="btn btn-primary me-md-2">Edit</button>
+          <button type="button" (click)="hideEditModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="modalAddVisible" class="modal" tabindex="-1" style="display: block;" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Item</h5>
+          <button type="button" (click)="hideAddModal()" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <app-add-item></app-add-item>
+        </div>
+        <div class="modal-footer d-grid gap-2 d-md-flex justify-content-md-center">
+          <button type="button" (click)="saveAddChanges()" class="btn btn-primary">Add Item</button>
+          <button type="button" (click)="hideAddModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
