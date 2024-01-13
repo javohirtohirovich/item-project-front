@@ -1,20 +1,33 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component,  OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { EditComponent } from '../modal/edit/edit.component';
-import { AddItemComponent } from '../modal/add-item/add-item.component';
-
+import { ItemService } from '../../services/item.service';
+import { Item } from '../../services/models/item';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule,RouterModule,EditComponent,AddItemComponent],
+  imports: [CommonModule,RouterModule,FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.less'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   public modalDeleteVisible: boolean = false;
   public modalEditVisible: boolean=false;
   public modalAddVisible: boolean=false;
+  private itemService:ItemService=inject(ItemService);
+  public items:Item[]=[];
+
+  public itemType: number = 0;
+  public itemName: string = "";
+  public itemDate: Date | null = null;
+  //Get Item
+  public ngOnInit(): void {
+      this.itemService.getItems()
+        .subscribe(x=>{
+          this.items=x;
+        });
+  }
 
   //Delete Modal Function
   public showDeleteModal(): void {
@@ -54,7 +67,8 @@ export class HomeComponent {
   }
 
   public saveAddChanges(): void {
-    // do something
+    debugger;
+    this.itemService.addItem(this.itemName, this.itemType, this.itemDate);
     this.modalAddVisible = false;
   }
 
