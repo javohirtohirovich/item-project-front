@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit {
   public itemType: number = 0;
   public itemName: string = "";
   public itemDate: Date =new Date();
+
+  public ItemId:number=0;
   //Get Item
   public ngOnInit(): void {
       this.itemService.getItems()
@@ -31,7 +33,8 @@ export class HomeComponent implements OnInit {
   }
 
   //Delete Modal Function
-  public showDeleteModal(): void {
+  public showDeleteModal(itemId: number): void {
+    this.ItemId=itemId;
     this.modalDeleteVisible = true;
   }
 
@@ -40,12 +43,22 @@ export class HomeComponent implements OnInit {
   }
 
   public saveDeleteChanges(): void {
-    // do something
+    this.itemService.deleteItem(this.ItemId).subscribe({
+      next: response => {
+        console.log("Delete successful:", response);
+        // You can handle the response here, e.g., update the UI or a list
+      },
+      error: err => {
+        console.error("Error during delete:", err);
+        // Handle the error here
+      }
+    });
     this.modalDeleteVisible = false;
   }
 
   //Edit Modal Function
-  public showEditModal(): void {
+  public showEditModal(itemId: number): void {
+    this.ItemId=itemId;
     this.modalEditVisible = true;
   }
 
@@ -54,7 +67,19 @@ export class HomeComponent implements OnInit {
   }
 
   public saveEditChanges(): void {
-    // do something
+    const itemModel = new Item();
+        itemModel.itemId=this.ItemId;        
+        itemModel.itemName=this.itemName;
+        itemModel.itemType=this.itemType;
+        itemModel.itemDate=this.itemDate;
+    this.itemService.editItem(itemModel).subscribe({
+      next: response => {
+        alert("Edit successful:");
+      },
+      error: err => {
+        alert("Error during edit:");
+      }
+    });
     this.modalEditVisible = false;
   }
 
@@ -72,7 +97,14 @@ export class HomeComponent implements OnInit {
         itemCreateModel.itemName=this.itemName;
         itemCreateModel.itemType=this.itemType;
         itemCreateModel.itemDate=this.itemDate;
-    this.itemService.addItem(itemCreateModel);
+    this.itemService.addItem(itemCreateModel).subscribe({
+      next: response => {
+        alert("Add successful:");
+      },
+      error: err => {
+        alert("Error during add:");
+      }
+    });
     this.modalAddVisible = false;
   }
 

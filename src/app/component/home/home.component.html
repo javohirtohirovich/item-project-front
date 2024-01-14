@@ -25,9 +25,9 @@
                         <td>{{ item.itemType }}</td>
                         <td class="d-flex justify-content-center">
                             <div class="d-grid gap-2 d-md-block">
-                                <button type="button" (click)="showEditModal()"
+                                <button type="button" (click)="showEditModal(item.itemId)"
                                     class="btn btn-outline-warning m-1">Edit</button>
-                                <button type="button" (click)="showDeleteModal()"
+                                <button type="button" (click)="showDeleteModal(item.itemId)"
                                     class="btn btn-outline-danger">Delete</button>
                             </div>
                         </td>
@@ -64,7 +64,7 @@
                 <p>Do you want to delete the item?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" (click)="saveDeleteChanges()" class="btn btn-primary">Delete</button>
+                <button  (click)="saveDeleteChanges()" class="btn btn-primary">Delete</button>
                 <button type="button" (click)="hideDeleteModal()" class="btn btn-secondary"
                     data-dismiss="modal">Close</button>
             </div>
@@ -87,17 +87,17 @@
                             <div class="form-row">
                                 <div class="col-md-12 mb-3">
                                     <label for="validationDefault01">Item name</label>
-                                    <input type="text" class="form-control" id="validationDefault01"
+                                    <input type="text" class="form-control" id="validationDefault01" [(ngModel)]="itemName" name="itemName"
                                         placeholder="Item name" required>
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label for="validationDefault02">Item type</label>
-                                    <input type="number" class="form-control" id="validationDefault02"
+                                    <input type="number" class="form-control" id="validationDefault02" [(ngModel)]="itemType" name="itemType"
                                         placeholder="Item type" required>
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label for="validationDefault03">Item date</label>
-                                    <input type="date" class="form-control" id="validationDefault03"
+                                    <input type="date" class="form-control" id="validationDefault03" [(ngModel)]="itemDate" name="itemDate"
                                         placeholder="Item date" required>
                                 </div>
                             </div>
@@ -152,7 +152,7 @@
                 </div>
             </div>
             <div class="modal-footer d-grid gap-2 d-md-flex justify-content-md-center">
-                <button type="submit" (click)="saveAddChanges()" class="btn btn-primary">Add Item</button>
+                <button (click)="saveAddChanges()" class="btn btn-primary">Add Item</button>
                 <button type="button" (click)="hideAddModal()" class="btn btn-secondary"
                     data-dismiss="modal">Close</button>
             </div>

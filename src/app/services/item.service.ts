@@ -32,6 +32,17 @@ export class ItemService{
         return this.itemApiService.addItem(itemCreate);
     }
 
+    //Delete Item
+    public deleteItem(itemId:number):Observable<any>{
+        return this.itemApiService.deleteItem(itemId);
+    }
+
+    //Edit Item
+    public editItem(item:Item):Observable<any>{
+        return this.itemApiService.editItem(item);
+    }
+
+
     //ToModel Function for GetAll
     private toModel(apiModel:ItemModel):Item{
          const result=new Item();

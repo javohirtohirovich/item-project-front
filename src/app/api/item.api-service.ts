@@ -12,12 +12,18 @@ export class ItemApiService {
     public getItems(): Observable<ItemModel[]> {
         return this.client.get<ItemModel[]>(this.apiUrl);
     }
+
     public addItem(item : ItemCreateModel ): Observable<any> {
-        let a= this.client.post(this.apiUrl,item);
-        console.log(a);
-        return a;
+        return this.client.post(this.apiUrl,item);
     }
-    
+
+    public deleteItem(itemId:number):Observable<any>{
+        return this.client.delete(`${this.apiUrl}?id=${itemId}`);
+    }
+    public editItem(item:ItemModel):Observable<any>{
+        return this.client.put(this.apiUrl,item);
+    }
+
 
 
 }
