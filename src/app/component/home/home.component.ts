@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component,  OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ItemService } from '../../services/item.service';
-import { Item } from '../../services/models/item';
+import { Item } from '../../services/models/item/item';
 import { FormsModule } from '@angular/forms';
+import { ItemCreate } from '../../services/models/item/itemCreate';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -20,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   public itemType: number = 0;
   public itemName: string = "";
-  public itemDate: Date | null = null;
+  public itemDate: Date =new Date();
   //Get Item
   public ngOnInit(): void {
       this.itemService.getItems()
@@ -67,8 +68,11 @@ export class HomeComponent implements OnInit {
   }
 
   public saveAddChanges(): void {
-    debugger;
-    this.itemService.addItem(this.itemName, this.itemType, this.itemDate);
+    const itemCreateModel = new ItemCreate();        
+        itemCreateModel.itemName=this.itemName;
+        itemCreateModel.itemType=this.itemType;
+        itemCreateModel.itemDate=this.itemDate;
+    this.itemService.addItem(itemCreateModel);
     this.modalAddVisible = false;
   }
 

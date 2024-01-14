@@ -21,7 +21,7 @@
                         <th scope="row">{{ i + 1 }}</th>
                         <td>{{ item.itemId }}</td>
                         <td>{{ item.itemName }}</td>
-                        <td>{{ item.itemDate }}</td>
+                        <td>{{ item.itemDate | date:"YYYY-MM-dd hh:mm" }}</td>
                         <td>{{ item.itemType }}</td>
                         <td class="d-flex justify-content-center">
                             <div class="d-grid gap-2 d-md-block">
@@ -114,6 +114,7 @@
     </div>
 </div>
 
+<!-- Add Modal -->
 <div *ngIf="modalAddVisible" class="modal" tabindex="-1" style="display: block;" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -130,19 +131,21 @@
                                 <div class="col-md-12 mb-3">
                                     <label for="validationDefault01">Item name</label>
                                     <input type="text" class="form-control" id="validationDefault01"
-                                        placeholder="Item name" [(ngModel)]="itemName" required>
+                                        placeholder="Item name" [(ngModel)]="itemName" name="itemName" required>
+                                    <!-- Add the 'name' attribute -->
                                 </div>
                                 <div class=" col-md-12 mb-3">
                                     <label for="validationDefault02">Item type</label>
                                     <input type="number" class="form-control" id="validationDefault02"
-                                        placeholder="Item type" [(ngModel)]="itemType" required>
+                                        placeholder="Item type" [(ngModel)]="itemType" name="itemType" required>
+                                    <!-- Add the 'name' attribute -->
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label for="validationDefault03">Item date</label>
                                     <input type="date" class="form-control" id="validationDefault03"
-                                        placeholder="Item date" [(ngModel)]="itemDate" required>
+                                        placeholder="Item date" [(ngModel)]="itemDate" name="itemDate" required>
+                                    <!-- Add the 'name' attribute -->
                                 </div>
-
                             </div>
                         </form>
                     </div>
