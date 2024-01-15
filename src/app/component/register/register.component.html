@@ -4,29 +4,31 @@
       <h4 class="text-center">Register</h4>
       <div class="mb-3">
         <label for="first_name" class="form-label">FirstName</label>
-        <input type="text" class="form-control" id="first_name">
+        <input type="text" [(ngModel)]="userName" name="userName" class="form-control" id="first_name">
       </div>
       <div class="mb-3">
         <label for="last_name" class="form-label">LastName</label>
-        <input type="text" class="form-control" id="last_name">
+        <input type="text" [(ngModel)]="userLastName" name="userLastName" class="form-control" id="last_name">
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="email">
+        <input type="email" [(ngModel)]="userEmail" name="userEmail" class="form-control" id="email">
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password">
+        <input type="password" [(ngModel)]="password" name="password" class="form-control" id="password">
       </div>
       <div class="mb-3">
         <label for="password_confirm" class="form-label">Password Confirm</label>
-        <input type="password" class="form-control" id="password_confirm">
+        <input type="password" [(ngModel)]="passwordConfirm" name="passwordConfirm" class="form-control"
+          id="password_confirm">
       </div>
       <div class="mb-3 form-check">
-        <label class="form-check-label">If you have already registered <a href="" [routerLink]="['/login']">Login</a> </label>
+        <label class="form-check-label">If you have already registered <a href="" [routerLink]="['/login']">Login</a>
+        </label>
       </div>
       <div class="d-grid gap-2 col-6 mx-auto">
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button (click)="registerUser()" class="btn btn-primary">Register</button>
       </div>
     </form>
   </div>

@@ -25,10 +25,6 @@ export class ItemService{
 
     //Create Item
     public addItem(itemCreate:ItemCreate): Observable<any> {
-        const itemCreateModel = new ItemCreate();        
-        itemCreateModel.itemName=itemCreate.itemName;
-        itemCreateModel.itemType=itemCreate.itemType;
-        itemCreateModel.itemDate=itemCreate.itemDate;
         return this.itemApiService.addItem(itemCreate);
     }
 
