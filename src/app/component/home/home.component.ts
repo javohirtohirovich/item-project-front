@@ -17,12 +17,13 @@ export class HomeComponent implements OnInit {
   public modalDeleteVisible: boolean = false;
   public modalEditVisible: boolean=false;
   public modalAddVisible: boolean=false;
-  private itemService:ItemService=inject(ItemService);
+  public itemService:ItemService=inject(ItemService);
   public items:Item[]=[];
 
   public itemType: number = 0;
   public itemName: string = "";
   public itemDate: Date =new Date();
+  private page_size:number=3;
 
   public ItemId:number=0;
 
@@ -33,14 +34,38 @@ export class HomeComponent implements OnInit {
 
   //Get Item
   public ngOnInit(): void {
-    this.itemService.getItems(this.currentPage).subscribe(
+    this.getItems(this.currentPage);
+   }
+
+  getItems(page: number) {
+    this.itemService.getItems(page).subscribe(
       (response) => {
-        debugger;
         this.items = response.items;
         this.pagenationData=response.paginationMetaData;
         this.totalPages=response.paginationMetaData.totalPages;
       }
-  )}
+  )
+  }
+
+  changePage(page: number): void {
+    if (page < 1 || page > this.totalPages) {
+      return;
+    }
+    this.currentPage = page;
+    this.getItems(this.currentPage);
+  }
+
+  hangePage(page: number): void {
+    if (page < 1 || page > this.totalPages) {
+      return;
+    }
+    this.currentPage = page;
+    this.itemService.getItems(this.currentPage);
+  }
+
+  get pageNumbers(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
 
   //Delete Modal Function
   public showDeleteModal(itemId: number): void {
@@ -55,14 +80,14 @@ export class HomeComponent implements OnInit {
   public saveDeleteChanges(): void {
     this.itemService.deleteItem(this.ItemId).subscribe({
       next: response => {
-        console.log("Delete successful:", response);
-        // You can handle the response here, e.g., update the UI or a list
+        this.getItems(this.currentPage)
+        alert("Delete successful");
       },
       error: err => {
-        console.error("Error during delete:", err);
-        // Handle the error here
+        alert("Error during delete:");
       }
     });
+    this.getItems(this.currentPage)
     this.modalDeleteVisible = false;
   }
 
@@ -84,6 +109,7 @@ export class HomeComponent implements OnInit {
         itemModel.itemDate=this.itemDate;
     this.itemService.editItem(itemModel).subscribe({
       next: response => {
+        this.getItems(this.currentPage)
         alert("Edit successful:");
       },
       error: err => {
@@ -109,6 +135,7 @@ export class HomeComponent implements OnInit {
         itemCreateModel.itemDate=this.itemDate;
     this.itemService.addItem(itemCreateModel).subscribe({
       next: response => {
+        this.getItems(this.currentPage)
         alert("Add successful:");
       },
       error: err => {
@@ -117,7 +144,4 @@ export class HomeComponent implements OnInit {
     });
     this.modalAddVisible = false;
   }
-
-  
-
 }

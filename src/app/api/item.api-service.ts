@@ -8,7 +8,7 @@ import { ItemGetAllModel } from "./models/item/item.getall.model";
 export class ItemApiService {
     private apiUrl = "https://localhost:7274/api/item"; // API manzili
 
-    private page_size:number=10;
+    private page_size:number=3;
     private client: HttpClient=inject(HttpClient);
     
     public getItems(pageNumber: number): Observable<ItemGetAllModel> {
