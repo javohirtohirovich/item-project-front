@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component,  OnInit, inject } from '@angular/core';
+import { Component,  DebugElement,  OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ItemService } from '../../services/item.service';
 import { Item } from '../../services/models/item/item';
 import { FormsModule } from '@angular/forms';
 import { ItemCreate } from '../../services/models/item/itemCreate';
+import { PaginationData } from '../../services/models/common/pagination.data';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -24,13 +25,22 @@ export class HomeComponent implements OnInit {
   public itemDate: Date =new Date();
 
   public ItemId:number=0;
+
+  public currentPage: number = 1;
+  public totalPages: number = 1;
+
+  public pagenationData:PaginationData=new PaginationData();
+
   //Get Item
   public ngOnInit(): void {
-      this.itemService.getItems()
-        .subscribe(x=>{
-          this.items=x;
-        });
-  }
+    this.itemService.getItems(this.currentPage).subscribe(
+      (response) => {
+        debugger;
+        this.items = response.items;
+        this.pagenationData=response.paginationMetaData;
+        this.totalPages=response.paginationMetaData.totalPages;
+      }
+  )}
 
   //Delete Modal Function
   public showDeleteModal(itemId: number): void {

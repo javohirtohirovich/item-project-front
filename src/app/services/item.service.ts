@@ -4,21 +4,25 @@ import { ItemApiService } from "../api/item.api-service";
 import { ItemModel } from "../api/models/item/item.model";
 import {Item} from "./models/item/item"
 import { ItemCreate } from "./models/item/itemCreate";
+import { ItemGetAll } from "./models/item/item.getall";
+import { PaginationMetaData } from "../api/models/common/pagination.data.model";
+import { PaginationData } from "./models/common/pagination.data";
 
 @Injectable({providedIn:"root"})
 export class ItemService{
-    
+        
     //Inject ApiService (Repository)
     private itemApiService:ItemApiService=inject(ItemApiService);
     
-    //GetAll Items
-    public getItems():Observable<Item[]>{
-        return this.itemApiService.getItems()
-            .pipe(map(x=>{
-                const result:Item[]=[];
-                for(let i=0;i<x.length;i++){
-                    result.push(this.toModel(x[i]));
-                }
+     // GetAll Items
+     public getItems(pageNumber:number): Observable<ItemGetAll> {
+        return this.itemApiService.getItems(pageNumber)
+            .pipe(map(response => {
+                const result = new ItemGetAll();
+                result.items = response.items.map(apiModel => this.toModel(apiModel));
+                console.log(response.paginationMetaData);
+                
+                result.paginationMetaData = this.toPaginationMetaData(response.paginationMetaData);
                 return result;
             }));
     }
@@ -38,7 +42,6 @@ export class ItemService{
         return this.itemApiService.editItem(item);
     }
 
-
     //ToModel Function for GetAll
     private toModel(apiModel:ItemModel):Item{
          const result=new Item();
@@ -47,5 +50,17 @@ export class ItemService{
          result.itemType=apiModel.itemType;
          result.itemDate=new Date(apiModel.itemDate);         
          return result;
+    }
+
+     // ToPaginationMetaData Function
+     private toPaginationMetaData(apiPaginationMetaData: PaginationMetaData): PaginationData {
+        const result = new PaginationData();
+        result.currentPage = apiPaginationMetaData.currentPage;
+        result.totalPages = apiPaginationMetaData.totalPages;
+        result.pageSize = apiPaginationMetaData.pageSize;
+        result.totalItems = apiPaginationMetaData.totalItems;
+        result.hasPrevious = apiPaginationMetaData.hasPrevious;
+        result.hasNext = apiPaginationMetaData.hasNext;
+        return result;
     }
 }
