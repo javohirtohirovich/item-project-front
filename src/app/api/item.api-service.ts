@@ -6,11 +6,16 @@ import {ItemCreateModel} from "./models/item/itemCreate.model"
 import { ItemGetAllModel } from "./models/item/item.getall.model";
 @Injectable({ providedIn: "root" })
 export class ItemApiService {
-    private apiUrl = "https://localhost:7274/api/item"; // API manzili
+    // API manzili
+    private apiUrl = "https://localhost:7274/api/item"; 
 
+    // PageSize
     private page_size:number=3;
+    
+    // Inject HttpClient
     private client: HttpClient=inject(HttpClient);
     
+    // Items GetAll Function
     public getItems(pageNumber: number): Observable<ItemGetAllModel> {
         const url = `${this.apiUrl}?page=${pageNumber}&pageSize=${this.page_size}`;
         return this.client.get<ItemGetAllModel>(url).pipe(
@@ -21,13 +26,17 @@ export class ItemApiService {
         );
       }
 
+    // Items Add Function
     public addItem(item : ItemCreateModel ): Observable<any> {
         return this.client.post(this.apiUrl,item);
     }
 
+    // Items Delete Function
     public deleteItem(itemId:number):Observable<any>{
         return this.client.delete(`${this.apiUrl}?id=${itemId}`);
     }
+
+    // Items Edit Function
     public editItem(item:ItemModel):Observable<any>{
         return this.client.put(this.apiUrl,item);
     }
