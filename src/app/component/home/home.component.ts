@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component,  DebugElement,  OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ItemService } from '../../services/item.service';
 import { Item } from '../../services/models/item/item';
@@ -9,67 +9,48 @@ import { PaginationData } from '../../services/models/common/pagination.data';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule,RouterModule,FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.less'
+  styleUrl: './home.component.less',
 })
 export class HomeComponent implements OnInit {
+
+  //For ModalWindow Variables
   public modalDeleteVisible: boolean = false;
-  public modalEditVisible: boolean=false;
-  public modalAddVisible: boolean=false;
-  public itemService:ItemService=inject(ItemService);
-  public items:Item[]=[];
+  public modalEditVisible: boolean = false;
+  public modalAddVisible: boolean = false;
 
+  //For GetItems Variables
+  public itemService: ItemService = inject(ItemService);
+  public items: Item[] = [];
+
+  //For Edit, Delete, Add Variables
   public itemType: number = 0;
-  public itemName: string = "";
-  public itemDate: Date =new Date();
-  private page_size:number=3;
+  public itemName: string = '';
+  public itemDate: Date = new Date();
+  public ItemId: number = 0;
 
-  public ItemId:number=0;
-
+  //For Pagination Variables
   public currentPage: number = 1;
   public totalPages: number = 1;
-
-  public pagenationData:PaginationData=new PaginationData();
+  public pagenationData: PaginationData = new PaginationData();
 
   //Get Item
   public ngOnInit(): void {
     this.getItems(this.currentPage);
-   }
+  }
 
   getItems(page: number) {
-    this.itemService.getItems(page).subscribe(
-      (response) => {
-        this.items = response.items;
-        this.pagenationData=response.paginationMetaData;
-        this.totalPages=response.paginationMetaData.totalPages;
-      }
-  )
-  }
-
-  changePage(page: number): void {
-    if (page < 1 || page > this.totalPages) {
-      return;
-    }
-    this.currentPage = page;
-    this.getItems(this.currentPage);
-  }
-
-  hangePage(page: number): void {
-    if (page < 1 || page > this.totalPages) {
-      return;
-    }
-    this.currentPage = page;
-    this.itemService.getItems(this.currentPage);
-  }
-
-  get pageNumbers(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    this.itemService.getItems(page).subscribe((response) => {
+      this.items = response.items;
+      this.pagenationData = response.paginationMetaData;
+      this.totalPages = response.paginationMetaData.totalPages;
+    });
   }
 
   //Delete Modal Function
   public showDeleteModal(itemId: number): void {
-    this.ItemId=itemId;
+    this.ItemId = itemId;
     this.modalDeleteVisible = true;
   }
 
@@ -79,21 +60,21 @@ export class HomeComponent implements OnInit {
 
   public saveDeleteChanges(): void {
     this.itemService.deleteItem(this.ItemId).subscribe({
-      next: response => {
-        this.getItems(this.currentPage)
-        alert("Delete successful");
+      next: (response) => {
+        this.getItems(this.currentPage);
+        alert('Delete successful');
       },
-      error: err => {
-        alert("Error during delete:");
-      }
+      error: (err) => {
+        alert('Error during delete:');
+      },
     });
-    this.getItems(this.currentPage)
+    this.getItems(this.currentPage);
     this.modalDeleteVisible = false;
   }
 
   //Edit Modal Function
   public showEditModal(itemId: number): void {
-    this.ItemId=itemId;
+    this.ItemId = itemId;
     this.modalEditVisible = true;
   }
 
@@ -103,18 +84,18 @@ export class HomeComponent implements OnInit {
 
   public saveEditChanges(): void {
     const itemModel = new Item();
-        itemModel.itemId=this.ItemId;        
-        itemModel.itemName=this.itemName;
-        itemModel.itemType=this.itemType;
-        itemModel.itemDate=this.itemDate;
+    itemModel.itemId = this.ItemId;
+    itemModel.itemName = this.itemName;
+    itemModel.itemType = this.itemType;
+    itemModel.itemDate = this.itemDate;
     this.itemService.editItem(itemModel).subscribe({
-      next: response => {
-        this.getItems(this.currentPage)
-        alert("Edit successful:");
+      next: (response) => {
+        this.getItems(this.currentPage);
+        alert('Edit successful:');
       },
-      error: err => {
-        alert("Error during edit:");
-      }
+      error: (err) => {
+        alert('Error during edit:');
+      },
     });
     this.modalEditVisible = false;
   }
@@ -129,19 +110,41 @@ export class HomeComponent implements OnInit {
   }
 
   public saveAddChanges(): void {
-    const itemCreateModel = new ItemCreate();        
-        itemCreateModel.itemName=this.itemName;
-        itemCreateModel.itemType=this.itemType;
-        itemCreateModel.itemDate=this.itemDate;
+    const itemCreateModel = new ItemCreate();
+    itemCreateModel.itemName = this.itemName;
+    itemCreateModel.itemType = this.itemType;
+    itemCreateModel.itemDate = this.itemDate;
     this.itemService.addItem(itemCreateModel).subscribe({
-      next: response => {
-        this.getItems(this.currentPage)
-        alert("Add successful:");
+      next: (response) => {
+        this.getItems(this.currentPage);
+        alert('Add successful:');
       },
-      error: err => {
-        alert("Error during add:");
-      }
+      error: (err) => {
+        alert('Error during add:');
+      },
     });
     this.modalAddVisible = false;
+  }
+
+  //Pagination Helper Function
+
+  public changePage(page: number): void {
+    if (page < 1 || page > this.totalPages) {
+      return;
+    }
+    this.currentPage = page;
+    this.getItems(this.currentPage);
+  }
+
+  public hangePage(page: number): void {
+    if (page < 1 || page > this.totalPages) {
+      return;
+    }
+    this.currentPage = page;
+    this.itemService.getItems(this.currentPage);
+  }
+
+  get pageNumbers(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 }
