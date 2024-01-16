@@ -52,7 +52,7 @@ export class ItemService{
          return result;
     }
 
-     // ToPaginationMetaData Function
+     // ToPaginationMetaData for Pagination
      private toPaginationMetaData(apiPaginationMetaData: PaginationMetaData): PaginationData {
         const result = new PaginationData();
         result.currentPage = apiPaginationMetaData.currentPage;
