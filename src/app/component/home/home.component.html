@@ -1,7 +1,13 @@
+<!--begin:: Main Window-->
 <div class="container mt-5">
+
+    <!--begin:: AddModal show Button-->
     <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
         <button class="btn btn-success me-md-2" (click)="showAddModal()" type="button">Add</button>
     </div>
+    <!--end:: AddModal show Button-->
+    
+    <!--begin:: Items Table-->
     <form class="mt-3 mx-auto justify-content-center">
         <div>
             <table class="table table-bordered table-striped">
@@ -52,7 +58,12 @@
           </div>
 
     </form>
+    <!--end:: Items Table-->
+
 </div>
+<!--end:: Main Window-->
+
+<!--begin:: Delete ModalWindow-->
 <div *ngIf="modalDeleteVisible" class="modal" tabindex="-1" style="display: block;" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -72,7 +83,9 @@
         </div>
     </div>
 </div>
+<!--end:: Delete ModalWindow-->
 
+<!--begin:: Edit ModalWindow-->
 <div *ngIf="modalEditVisible" class="modal" tabindex="-1" style="display: block;" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -114,8 +127,9 @@
         </div>
     </div>
 </div>
+<!--begin:: Edit ModalWindow-->
 
-<!-- Add Modal -->
+<!--begin:: Add ModalWindow-->
 <div *ngIf="modalAddVisible" class="modal" tabindex="-1" style="display: block;" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -160,3 +174,5 @@
         </div>
     </div>
 </div>
+<!--begin:: Add ModalWindow-->
+
