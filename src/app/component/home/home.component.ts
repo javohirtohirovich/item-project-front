@@ -24,11 +24,18 @@ export class HomeComponent implements OnInit {
   public itemService: ItemService = inject(ItemService);
   public items: Item[] = [];
 
-  //For Edit, Delete, Add Variables
+  //For Add Variables
   public itemType: number = 0;
   public itemName: string = '';
   public itemDate: Date = new Date();
+  
+  //For Delete, Edit, 
   public ItemId: number = 0;
+
+  //For Edit Variables
+  public itemTypeEdit: number = 0;
+  public itemNameEdit: string = '';
+  public itemDateEdit: Date = new Date();
 
   //For Pagination Variables
   public currentPage: number = 1;
@@ -73,8 +80,13 @@ export class HomeComponent implements OnInit {
   }
 
   //Edit Modal Function
-  public showEditModal(itemId: number): void {
+  public showEditModal(itemId: number,itemNameEdit:string,itemTypeEdit:number,itemDateEdit:Date): void {
+    
     this.ItemId = itemId;
+    this.itemNameEdit=itemNameEdit;
+    this.itemTypeEdit=itemTypeEdit;
+    this.itemDateEdit=itemDateEdit
+
     this.modalEditVisible = true;
   }
 
