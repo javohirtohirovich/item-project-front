@@ -10,7 +10,7 @@ export class ItemApiService {
     private apiUrl = "https://localhost:7274/api/item"; 
 
     // PageSize
-    private page_size:number=3;
+    private page_size:number=10;
     
     // Inject HttpClient
     private client: HttpClient=inject(HttpClient);

@@ -15,6 +15,10 @@ import { PaginationData } from '../../services/models/common/pagination.data';
 })
 export class HomeComponent implements OnInit {
 
+  
+  public page_size:number=10;
+
+
   //For ModalWindow Variables
   public modalDeleteVisible: boolean = false;
   public modalEditVisible: boolean = false;
