@@ -14,9 +14,30 @@
 
       <div class="col-md-3 text-end">
         <button type="button" class="btn btn-outline-primary me-2" [routerLink]="['/login']" >Login</button>
-        <button type="button" class="btn btn-primary" [routerLink]="['/register']">Sign-up</button>
+        <button type="button" class="btn btn-outline-primary me-2" [routerLink]="['/register']">Sign-up</button>
+        <button type="button" class="btn btn-outline-danger" (click)="showLogOutModal()">Log out</button>
       </div>
     </header>
   </div>
 </header>
+
+<div *ngIf="modalLogOutVisible" class="modal" tabindex="-1" style="display: block;" role="dialog">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Delete Item</h5>
+              <button type="button" (click)="hideLogOutModal()" class="btn-close" data-dismiss="modal">
+              </button>
+          </div>
+          <div class="modal-body">
+              <p>Do you want to delete the item?</p>
+          </div>
+          <div class="modal-footer">
+              <button  (click)="saveLogOutChanges()" class="btn btn-primary">Delete</button>
+              <button type="button" (click)="hideLogOutModal()" class="btn btn-secondary"
+                  data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
   
