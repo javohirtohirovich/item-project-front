@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ItemCreate } from '../../services/models/item/itemCreate';
 import { PaginationData } from '../../services/models/common/pagination.data';
 import { LoadingComponent } from '../loading/loading.component';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -15,6 +16,8 @@ import { LoadingComponent } from '../loading/loading.component';
   styleUrl: './home.component.less',
 })
 export class HomeComponent implements OnInit {
+  constructor(private toastr: ToastrService) {};
+
   public page_size: number = 10;
 
   public loading: boolean = false;
@@ -88,10 +91,10 @@ export class HomeComponent implements OnInit {
     this.itemService.deleteItem(this.ItemId).subscribe({
       next: (response) => {
         this.getItems(this.currentPage);
-        alert('Delete successful');
+        this.toastr.success("Success delete item!");          
       },
       error: (err) => {
-        alert('Error during delete:');
+        this.toastr.warning("Error during delete!");          
       },
     });
     this.getItems(this.currentPage);
@@ -128,10 +131,10 @@ export class HomeComponent implements OnInit {
     this.itemService.editItem(itemModel).subscribe({
       next: (response) => {
         this.getItems(this.currentPage);
-        alert('Edit successful:');
+        this.toastr.success("Success edit item!");          
       },
       error: (err) => {
-        alert('Error during edit:');
+        this.toastr.warning("Error during edit!");          
       },
     });
     this.loading=false;
@@ -159,10 +162,10 @@ export class HomeComponent implements OnInit {
     this.itemService.addItem(itemCreateModel).subscribe({
       next: (response) => {
         this.getItems(this.currentPage);
-        alert('Add successful:');
+        this.toastr.success("Success add item!");          
       },
       error: (err) => {
-        alert('Error during add:');
+        this.toastr.warning("Error during add!");          
       },
     });
     this.loading=false;

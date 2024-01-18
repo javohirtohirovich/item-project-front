@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { UserRegister } from '../../services/models/user/userRegister';
 import { LoadingComponent } from '../loading/loading.component';
+import { Toast, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +16,7 @@ import { LoadingComponent } from '../loading/loading.component';
 })
 export class RegisterComponent {
   private userService: UserService = inject(UserService);
+  constructor(private toastr: ToastrService) {}  
   private router: Router = inject(Router);
   
   public userName: string = '';
@@ -37,19 +39,19 @@ export class RegisterComponent {
       
       this.userService.userRegister(userRegister).subscribe({
         next: (response) => {
-          alert('Register Successful:');          
+          this.toastr.success("Successful Register!");          
           this.loading=false;
           this.router.navigate(["/login"])
         },
         error: (err) => {
-          alert('Error during register:');
+          this.toastr.warning("Error during register!");
           this.loading=false;
         },
       });
     }
     else{
       this.loading=false;
-      alert('Passwords do not match. Please check and try again.');
+      this.toastr.warning('Passwords do not match!');
     }
   }
 }

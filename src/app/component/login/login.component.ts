@@ -6,6 +6,7 @@ import { UserLogin } from '../../services/models/user/userLogin';
 import { AuthenticationOrchestrator } from '../models/authentication-orchestrator';
 import { CommonModule } from '@angular/common';
 import { LoadingComponent } from '../loading/loading.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ import { LoadingComponent } from '../loading/loading.component';
 })
 export class LoginComponent {
   private userService: UserService = inject(UserService);
+  constructor(private toastr: ToastrService) {};
   public userEmail: string = '';
   public password: string = '';
   public loading: boolean = false;
@@ -23,6 +25,7 @@ export class LoginComponent {
 
 
   public loginUser(): void {
+
     const userLoginModel = new UserLogin();
     userLoginModel.clientId = 0;
     userLoginModel.grantType = 'password';
@@ -35,10 +38,18 @@ export class LoginComponent {
         this.loading = false;
         AuthenticationOrchestrator.signaller.next(true);
         this.router.navigate(["/home"])
+        this.toastr.success("Successful Login!");          
         // redirect here!
       },
       error: (err) => {
-        this.loading = false;
+        if(err.status==404){
+          this.toastr.warning("No such email user found!");
+          this.loading = false;
+        }
+        else{
+          this.toastr.warning("Error during login!");
+         this.loading = false;
+        }    
       },
     });
   }
