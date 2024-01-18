@@ -6,10 +6,8 @@ import { FooterComponent } from '../footer/footer.component';
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterOutlet,HeaderComponent,FooterComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent],
   templateUrl: './layout.component.html',
-  styleUrl: './layout.component.less'
+  styleUrl: './layout.component.less',
 })
-export class LayoutComponent {
-
-}
+export class LayoutComponent {}
