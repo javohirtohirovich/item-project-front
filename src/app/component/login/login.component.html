@@ -26,10 +26,6 @@
     </div>
 </div>
 
-<div *ngIf="loading" class="loading-overlay">
-</div>
-<div *ngIf="loading" class="spinner-container">
-  <div class="spinner-border text-light" role="status">
-    <span class="sr-only"></span>
-  </div>
+<div *ngIf="loading">
+    <app-loading></app-loading>
 </div>

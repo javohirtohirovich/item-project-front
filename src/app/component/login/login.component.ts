@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { UserLogin } from '../../services/models/user/userLogin';
 import { AuthenticationOrchestrator } from '../models/authentication-orchestrator';
 import { CommonModule } from '@angular/common';
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule, FormsModule, CommonModule],
+  imports: [RouterModule, FormsModule, CommonModule,LoadingComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.less'
 })
