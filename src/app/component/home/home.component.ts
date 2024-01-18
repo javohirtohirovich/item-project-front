@@ -6,15 +6,18 @@ import { Item } from '../../services/models/item/item';
 import { FormsModule } from '@angular/forms';
 import { ItemCreate } from '../../services/models/item/itemCreate';
 import { PaginationData } from '../../services/models/common/pagination.data';
+import { LoadingComponent } from '../loading/loading.component';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule,LoadingComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.less',
 })
 export class HomeComponent implements OnInit {
   public page_size: number = 10;
+
+  public loading: boolean = false;
 
   //For ModalWindow Variables
   public modalDeleteVisible: boolean = false;
@@ -61,11 +64,13 @@ export class HomeComponent implements OnInit {
 
   //GetAll Items
   getItems(page: number) {
+    this.loading=true;
     this.itemService.getItems(page).subscribe((response) => {
       this.items = response.items;
       this.pagenationData = response.paginationMetaData;
       this.totalPages = response.paginationMetaData.totalPages;
     });
+    this.loading=false;
   }
 
   //Delete Modal Function
@@ -79,6 +84,7 @@ export class HomeComponent implements OnInit {
   }
 
   public saveDeleteChanges(): void {
+    this.loading=true;
     this.itemService.deleteItem(this.ItemId).subscribe({
       next: (response) => {
         this.getItems(this.currentPage);
@@ -89,6 +95,7 @@ export class HomeComponent implements OnInit {
       },
     });
     this.getItems(this.currentPage);
+    this.loading=false;
     this.modalDeleteVisible = false;
   }
 
@@ -112,6 +119,7 @@ export class HomeComponent implements OnInit {
   }
 
   public saveEditChanges(): void {
+    this.loading=true;
     const itemModel = new Item();
     itemModel.itemId = this.ItemId;
     itemModel.itemName = this.itemName;
@@ -126,6 +134,7 @@ export class HomeComponent implements OnInit {
         alert('Error during edit:');
       },
     });
+    this.loading=false;
     this.modalEditVisible = false;
   }
 
@@ -142,6 +151,7 @@ export class HomeComponent implements OnInit {
   }
 
   public saveAddChanges(): void {
+    this.loading=true;
     const itemCreateModel = new ItemCreate();
     itemCreateModel.itemName = this.itemName;
     itemCreateModel.itemType = this.itemType;
@@ -155,6 +165,7 @@ export class HomeComponent implements OnInit {
         alert('Error during add:');
       },
     });
+    this.loading=false;
     this.modalAddVisible = false;
   }
 
