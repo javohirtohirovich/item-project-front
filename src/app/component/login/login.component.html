@@ -4,21 +4,39 @@
             <h4 class="text-center">Login</h4>
             <div class="mb-3 mt-5">
                 <label for="email" class="form-label">Email address</label>
-                <input type="email" [(ngModel)]="userEmail" name="userEmail" class="form-control" placeholder="email@gmail.com" id="email" required />
+                <input type="email" [(ngModel)]="userEmail" name="userEmail" class="form-control"
+                    placeholder="email@gmail.com" id="email" required />
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <p>
-                    <input type="password" [(ngModel)]="password" name="password" class="form-control" id="password" placeholder="Password" required />
+                    <input type="password" [(ngModel)]="password" name="password" class="form-control" id="password"
+                        placeholder="Password" required />
                 </p>
             </div>
             <div class="mb-3 form-check">
-                <label class="form-check-label">You don't have an account <a href="" [routerLink]="['/register']">Register</a> </label>
+                <label class="form-check-label">You don't have an account
+                    <a href="" [routerLink]="['/register']">Register</a>
+                </label>
             </div>
             <div class="d-grid gap-2 col-6 mx-auto">
                 <button (click)="loginUser()" class="btn btn-primary">Login</button>
-              </div>
+            </div>
         </form>
+    </div>
+</div>
 
+<div *ngIf="loading">
+    <!--Dark backgroud + spinner-->
+    <div class="d-flex justify-content-center">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
     </div>
 </div>

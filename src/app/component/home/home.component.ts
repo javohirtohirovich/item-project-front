@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ItemService } from '../../services/item.service';
 import { Item } from '../../services/models/item/item';
 import { FormsModule } from '@angular/forms';
@@ -14,10 +14,7 @@ import { PaginationData } from '../../services/models/common/pagination.data';
   styleUrl: './home.component.less',
 })
 export class HomeComponent implements OnInit {
-
-  
-  public page_size:number=10;
-
+  public page_size: number = 10;
 
   //For ModalWindow Variables
   public modalDeleteVisible: boolean = false;
@@ -32,8 +29,8 @@ export class HomeComponent implements OnInit {
   public itemType: number = 0;
   public itemName: string = '';
   public itemDate: Date = new Date();
-  
-  //For Delete, Edit, 
+
+  //For Delete, Edit,
   public ItemId: number = 0;
 
   //For Edit Variables
@@ -46,11 +43,23 @@ export class HomeComponent implements OnInit {
   public totalPages: number = 1;
   public pagenationData: PaginationData = new PaginationData();
 
-  //Get Item
+  private router: Router = inject(Router);
+  
   public ngOnInit(): void {
+    this.check_token();
     this.getItems(this.currentPage);
   }
 
+  //Check Token
+  public check_token():void{
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      this.router.navigate(['/login']);
+      return;
+    }
+  }
+
+  //GetAll Items
   getItems(page: number) {
     this.itemService.getItems(page).subscribe((response) => {
       this.items = response.items;
@@ -84,12 +93,16 @@ export class HomeComponent implements OnInit {
   }
 
   //Edit Modal Function
-  public showEditModal(itemId: number,itemNameEdit:string,itemTypeEdit:number,itemDateEdit:Date): void {
-    
+  public showEditModal(
+    itemId: number,
+    itemNameEdit: string,
+    itemTypeEdit: number,
+    itemDateEdit: Date
+  ): void {
     this.ItemId = itemId;
-    this.itemNameEdit=itemNameEdit;
-    this.itemTypeEdit=itemTypeEdit;
-    this.itemDateEdit=itemDateEdit
+    this.itemNameEdit = itemNameEdit;
+    this.itemTypeEdit = itemTypeEdit;
+    this.itemDateEdit = itemDateEdit;
 
     this.modalEditVisible = true;
   }
@@ -118,6 +131,9 @@ export class HomeComponent implements OnInit {
 
   //Add Modal Function
   public showAddModal(): void {
+    this.itemName = '';
+    this.itemType = 0;
+    this.itemDate = new Date();
     this.modalAddVisible = true;
   }
 
