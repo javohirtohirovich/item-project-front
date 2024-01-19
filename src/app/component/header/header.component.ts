@@ -16,6 +16,8 @@ export class HeaderComponent implements OnInit {
   public modalLogOutVisible: boolean = false;
   public isLoggedIn: boolean = false;
 
+
+  //Modal LogOut Function
   public showLogOutModal(): void {
     this.modalLogOutVisible = true;
   }

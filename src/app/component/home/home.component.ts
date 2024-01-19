@@ -11,12 +11,12 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule,LoadingComponent],
+  imports: [CommonModule, RouterModule, FormsModule, LoadingComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.less',
 })
 export class HomeComponent implements OnInit {
-  constructor(private toastr: ToastrService) {};
+  constructor(private toastr: ToastrService) {}
 
   public page_size: number = 10;
 
@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
   public itemDate: Date = new Date();
 
   //For Delete, Edit,
-  public ItemId: number = 0;
+  public itemId: number = 0;
 
   //For Edit Variables
   public itemTypeEdit: number = 0;
@@ -50,14 +50,14 @@ export class HomeComponent implements OnInit {
   public pagenationData: PaginationData = new PaginationData();
 
   private router: Router = inject(Router);
-  
+
   public ngOnInit(): void {
     this.check_token();
     this.getItems(this.currentPage);
   }
 
   //Check Token
-  public check_token():void{
+  public check_token(): void {
     const token = localStorage.getItem('access_token');
     if (!token) {
       this.router.navigate(['/login']);
@@ -66,19 +66,19 @@ export class HomeComponent implements OnInit {
   }
 
   //GetAll Items
-  getItems(page: number) {
-    this.loading=true;
+  public getItems(page: number): void {
+    this.loading = true;
     this.itemService.getItems(page).subscribe((response) => {
       this.items = response.items;
       this.pagenationData = response.paginationMetaData;
       this.totalPages = response.paginationMetaData.totalPages;
+      this.loading = false;
     });
-    this.loading=false;
   }
 
   //Delete Modal Function
   public showDeleteModal(itemId: number): void {
-    this.ItemId = itemId;
+    this.itemId = itemId;
     this.modalDeleteVisible = true;
   }
 
@@ -87,18 +87,18 @@ export class HomeComponent implements OnInit {
   }
 
   public saveDeleteChanges(): void {
-    this.loading=true;
-    this.itemService.deleteItem(this.ItemId).subscribe({
+    this.loading = true;
+    this.itemService.deleteItem(this.itemId).subscribe({
       next: (response) => {
         this.getItems(this.currentPage);
-        this.toastr.success("Success delete item!");          
+        this.toastr.success('Success delete item!');
       },
       error: (err) => {
-        this.toastr.warning("Error during delete!");          
+        this.toastr.warning('Error during delete!');
       },
     });
     this.getItems(this.currentPage);
-    this.loading=false;
+    this.loading = false;
     this.modalDeleteVisible = false;
   }
 
@@ -109,7 +109,7 @@ export class HomeComponent implements OnInit {
     itemTypeEdit: number,
     itemDateEdit: Date
   ): void {
-    this.ItemId = itemId;
+    this.itemId = itemId;
     this.itemNameEdit = itemNameEdit;
     this.itemTypeEdit = itemTypeEdit;
     this.itemDateEdit = itemDateEdit;
@@ -122,22 +122,22 @@ export class HomeComponent implements OnInit {
   }
 
   public saveEditChanges(): void {
-    this.loading=true;
+    this.loading = true;
     const itemModel = new Item();
-    itemModel.itemId = this.ItemId;
+    itemModel.itemId = this.itemId;
     itemModel.itemName = this.itemName;
     itemModel.itemType = this.itemType;
     itemModel.itemDate = this.itemDate;
     this.itemService.editItem(itemModel).subscribe({
       next: (response) => {
         this.getItems(this.currentPage);
-        this.toastr.success("Success edit item!");          
+        this.toastr.success('Success edit item!');
       },
       error: (err) => {
-        this.toastr.warning("Error during edit!");          
+        this.toastr.warning('Error during edit!');
       },
     });
-    this.loading=false;
+    this.loading = false;
     this.modalEditVisible = false;
   }
 
@@ -154,7 +154,7 @@ export class HomeComponent implements OnInit {
   }
 
   public saveAddChanges(): void {
-    this.loading=true;
+    this.loading = true;
     const itemCreateModel = new ItemCreate();
     itemCreateModel.itemName = this.itemName;
     itemCreateModel.itemType = this.itemType;
@@ -162,13 +162,13 @@ export class HomeComponent implements OnInit {
     this.itemService.addItem(itemCreateModel).subscribe({
       next: (response) => {
         this.getItems(this.currentPage);
-        this.toastr.success("Success add item!");          
+        this.toastr.success('Success add item!');
       },
       error: (err) => {
-        this.toastr.warning("Error during add!");          
+        this.toastr.warning('Error during add!');
       },
     });
-    this.loading=false;
+    this.loading = false;
     this.modalAddVisible = false;
   }
 
