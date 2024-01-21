@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit {
   public ngOnInit(): void {
     const token = localStorage.getItem('access_token');
     if (token) {
+      this.router.navigate(['/home']);
       this.isLoggedIn = true;
     }
     AuthenticationOrchestrator.signaller.subscribe((x) => {
