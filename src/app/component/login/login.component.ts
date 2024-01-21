@@ -23,8 +23,16 @@ export class LoginComponent {
   public loading: boolean = false;
   private router: Router = inject(Router);
 
+  public emailError: string = '';
+  public passwordError: string = '';
+
 
   public loginUser(): void {
+    this.resetErrors();
+
+    if (!this.validateForm()) {
+      return;
+    }
 
     const userLoginModel = new UserLogin();
     userLoginModel.clientId = 0;
@@ -37,20 +45,50 @@ export class LoginComponent {
       next: (response) => {
         this.loading = false;
         AuthenticationOrchestrator.signaller.next(true);
-        this.router.navigate(["/home"])
-        this.toastr.success("Successful Login!");          
-        // redirect here!
+        this.router.navigate(['/home']);
+        this.toastr.success('Successful Login!');
       },
       error: (err) => {
-        if(err.status==404){
-          this.toastr.warning("No such email user found!");
-          this.loading = false;
+        if (err.status == 404) {
+          this.toastr.warning('No such email user found!');
+        } else {
+          this.toastr.warning('Error during login!');
         }
-        else{
-          this.toastr.warning("Error during login!");
-         this.loading = false;
-        }    
+        this.loading = false;
       },
     });
+  }
+
+
+  private validateForm(): boolean {
+    let isValid = true;
+
+    if (!this.userEmail) {
+      this.emailError = 'Email is required';
+      isValid = false;
+    } else if (!this.isValidEmail(this.userEmail)) {
+      this.emailError = 'Invalid email format';
+      isValid = false;
+    }
+
+    if (!this.password) {
+      this.passwordError = 'Password is required';
+      isValid = false;
+    }
+   
+
+    return isValid;
+  }
+
+  private isValidEmail(email: string): boolean {
+    
+    const emailRegex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
+
+    return emailRegex.test(email);
+  }
+
+  private resetErrors(): void {
+    this.emailError = '';
+    this.passwordError = '';
   }
 }
