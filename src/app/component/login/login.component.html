@@ -1,36 +1,46 @@
 <div class="row justify-content-center">
     <div class="col col-lg-6">
+        <!--begin::Login Form-->
         <form class="mx-auto">
             <h4 class="text-center">Login</h4>
-            <!-- Email Input -->
+            <!--begin::Email group -->
             <div class="mb-3 mt-5">
                 <label for="email" class="form-label">Email address</label>
                 <input type="email" [(ngModel)]="userEmail" name="userEmail" class="form-control"
                     placeholder="email@gmail.com" id="email" required />
                 <div class="text-danger" *ngIf="emailError">{{ emailError }}</div>
             </div>
+            <!--end::Email group -->
 
-            <!-- Password Input -->
+            <!--beging::Password Input -->
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" [(ngModel)]="password" name="password" class="form-control" id="password"
                     placeholder="Password" required />
                 <div class="text-danger" *ngIf="passwordError">{{ passwordError }}</div>
             </div>
+            <!--end::Password Input -->
 
+            <!--begin::Link Register page-->
             <div class="mb-3 form-check">
                 <label class="form-check-label">You don't have an account
                     <a href="" [routerLink]="['/register']">Register</a>
                 </label>
             </div>
+            <!--end::Link Register page-->
+
+            <!--begin::Button Login-->
             <div class="d-grid gap-2 col-6 mx-auto">
                 <button (click)="loginUser()" class="btn btn-primary">Login</button>
             </div>
+            <!--end::Button Login-->
         </form>
+        <!--end::Login Form-->
     </div>
 </div>
 
-
+<!--begin::Loading Component-->
 <div *ngIf="loading">
     <app-loading></app-loading>
 </div>
+<!--end::Loading Component-->
