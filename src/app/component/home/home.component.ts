@@ -60,17 +60,12 @@ export class HomeComponent implements OnInit {
 
     //NgOnInit Function
     public ngOnInit(): void {
-        this.check_token();
-        this.getItems(this.currentPage);
-    }
-
-    //Check Token
-    public check_token(): void {
         const token = localStorage.getItem('access_token');
         if (!token) {
             this.router.navigate(['/login']);
             return;
         }
+        this.getItems(this.currentPage);
     }
 
     //GetAll Items

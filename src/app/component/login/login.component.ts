@@ -68,6 +68,8 @@ export class LoginComponent {
             error: (err) => {
                 if (err.status == 404) {
                     this.toastr.warning('No such email user found!');
+                }else if(err.status==422){
+                    this.toastr.warning('Your password is incorrect!');
                 } else {
                     this.toastr.warning('Error during login!');
                 }

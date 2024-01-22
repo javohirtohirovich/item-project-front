@@ -45,13 +45,13 @@
             <nav aria-label="Page navigation example">
               <ul class="pagination justify-content-center">
                 <li class="page-item" [class.disabled]="currentPage === 1">
-                  <a class="page-link" [routerLink]="['/item-list']" href="#" (click)="changePage(currentPage - 1)">Previous</a>
+                  <a class="page-link" [routerLink]="['/home']" href="#" (click)="changePage(currentPage - 1)">Previous</a>
                 </li>
                 <li class="page-item" *ngFor="let pageNumber of pageNumbers" [class.active]="currentPage === pageNumber">
-                  <a class="page-link" [routerLink]="['/item-list']" href="#" (click)="changePage(pageNumber)">{{ pageNumber }}</a>
+                  <a class="page-link" [routerLink]="['/home']" href="#" (click)="changePage(pageNumber)">{{ pageNumber }}</a>
                 </li>
                 <li class="page-item" [class.disabled]="currentPage === this.totalPages">
-                  <a class="page-link" [routerLink]="['/item-list']" href="#" (click)="changePage(currentPage + 1)">Next</a>
+                  <a class="page-link" [routerLink]="['/home']" href="#" (click)="changePage(currentPage + 1)">Next</a>
                 </li>
               </ul>
             </nav>  

@@ -20,7 +20,6 @@ export class ItemService{
             .pipe(map(response => {
                 const result = new ItemGetAll();
                 result.items = response.items.map(apiModel => this.toModel(apiModel));
-                console.log(response.paginationMetaData);
                 
                 result.paginationMetaData = this.toPaginationMetaData(response.paginationMetaData);
                 return result;
