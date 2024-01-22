@@ -1,39 +1,62 @@
 <div class="row justify-content-center">
-  <div class="col col-lg-6">
-    <form class="mx-auto">
-      <h4 class="text-center">Register</h4>
-      <div class="mb-3">
-        <label for="first_name" class="form-label">FirstName</label>
-        <input type="text" [(ngModel)]="userName" name="userName" class="form-control" id="first_name">
-      </div>
-      <div class="mb-3">
-        <label for="last_name" class="form-label">LastName</label>
-        <input type="text" [(ngModel)]="userLastName" name="userLastName" class="form-control" id="last_name">
-      </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">Email address</label>
-        <input type="email" [(ngModel)]="userEmail" name="userEmail" class="form-control" id="email">
-      </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" [(ngModel)]="password" name="password" class="form-control" id="password">
-      </div>
-      <div class="mb-3">
-        <label for="password_confirm" class="form-label">Password Confirm</label>
-        <input type="password" [(ngModel)]="passwordConfirm" name="passwordConfirm" class="form-control"
-          id="password_confirm">
-      </div>
-      <div class="mb-3 form-check">
-        <label class="form-check-label">If you have already registered <a href="" [routerLink]="['/login']">Login</a>
-        </label>
-      </div>
-      <div class="d-grid gap-2 col-6 mx-auto">
-        <button (click)="registerUser()" class="btn btn-primary">Register</button>
-      </div>
-    </form>
-  </div>
+    <div class="col col-lg-6">
+        
+        <form [formGroup]="formRegister" class="mx-auto">
+            
+            <!--begin:: Register title-->
+            <h4 class="text-center">Register</h4>
+            <!--end:: Register title-->
+           
+            <!--begin::FirstName-->
+            <div class="mb-3">
+                <label for="first_name" class="form-label">FirstName</label>
+                <input [(ngModel)]="userName" type="text" name="userName" class="form-control" id="first_name" required>
+            </div>
+            <!--end::FirstName-->
+
+            <!--begin::LastName-->
+            <div class="form-group mb-3">
+                <label for="last_name" class="form-label">LastName</label>
+                <input [(ngModel)]="userLastName" type="text" name="userLastName" class="form-control" id="last_name" required>
+            </div>
+            <!--end::LastName-->
+
+            <!--begin::Email-->
+            <div class="form-group mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input [(ngModel)]="userEmail" type="email" name="userEmail" class="form-control" id="email" required>
+            </div>
+            <!--end::Email-->
+
+            <!--begin::Password-->
+            <div class="form-group mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input [(ngModel)]="password" type="password" name="password" class="form-control" id="password" required>
+            </div>
+            <!--End::Password-->
+
+            <!--begin::Reset Password-->
+            <div class="form-group mb-3">
+                <label for="password_confirm" class="form-label">Password Confirm</label>
+                <input [(ngModel)]="passwordConfirm" type="password" name="passwordConfirm" class="form-control"
+                    id="password_confirm" required>
+            </div>
+            <!--end::Reset Password-->
+
+            <div class="mb-3 form-check">
+                <label class="form-check-label">If you have already registered <a href=""
+                        [routerLink]="['/login']">Login</a>
+                </label>
+            </div>
+
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button (click)="registerUser()" type="submit" class="btn btn-primary">Register</button>
+            </div>
+
+        </form>
+    </div>
 </div>
 
 <div *ngIf="loading">
-  <app-loading></app-loading>
+    <app-loading></app-loading>
 </div>

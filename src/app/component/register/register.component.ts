@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, Inject, NgModule, inject } from '@angular/core';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { UserRegister } from '../../services/models/user/userRegister';
@@ -10,13 +10,15 @@ import { Toast, ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [RouterModule, CommonModule, FormsModule,LoadingComponent],
+  imports: [RouterModule, CommonModule, FormsModule,LoadingComponent,ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.less',
 })
 export class RegisterComponent {
+  
   private userService: UserService = inject(UserService);
-  constructor(private toastr: ToastrService) {}  
+  
+  constructor(private toastr: ToastrService,public formRegister:FormGroup) {}  
   private router: Router = inject(Router);
   
   public userName: string = '';
