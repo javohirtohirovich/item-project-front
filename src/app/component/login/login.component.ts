@@ -16,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './login.component.less'
 })
 export class LoginComponent {
+  //Inject userService
   private userService: UserService = inject(UserService);
   constructor(private toastr: ToastrService) {};
   public userEmail: string = '';
