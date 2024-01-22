@@ -1,23 +1,35 @@
 <!--begin:: Header-->
 <header>
   <div class="container">
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <header
+      class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
       <div class="col-md-3 mb-2 mb-md-0">
         <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-          <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+          <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap">
+            <use xlink:href="#bootstrap"></use>
+          </svg>
         </a>
       </div>
 
       <div *ngIf="isLoggedIn">
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0" >
-          <li><a href="#" class="nav-link px-3" [routerLink]="['/home']">Home</a></li>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+          <button type="button" class="btn btn-primary" [routerLink]="['/home']">
+            <svg xmlns="http://www.w3.org/2000/svg"
+              width="30" height="30" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+              <path
+                d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
+            </svg>
+          </button>
         </ul>
       </div>
-      
+
       <div class="col-md-3 text-end">
-        <button type="button" *ngIf="!isLoggedIn" class="btn btn-outline-primary me-2" [routerLink]="['/login']" >Login</button>
-        <button type="button" *ngIf="!isLoggedIn" class="btn btn-outline-primary me-2" [routerLink]="['/register']">Sign-up</button>
-        <button type="button" *ngIf="isLoggedIn" class="btn btn-outline-danger" (click)="showLogOutModal()">Log out</button>
+        <button type="button" *ngIf="!isLoggedIn" class="btn btn-outline-primary me-2"
+          [routerLink]="['/login']">Login</button>
+        <button type="button" *ngIf="!isLoggedIn" class="btn btn-outline-primary me-2"
+          [routerLink]="['/register']">Sign-up</button>
+        <button type="button" *ngIf="isLoggedIn" class="btn btn-outline-danger" (click)="showLogOutModal()">Log
+          out</button>
       </div>
     </header>
   </div>
@@ -27,22 +39,20 @@
 <!--begin:: LogOut-->
 <div *ngIf="modalLogOutVisible" class="modal" tabindex="-1" style="display: block;" role="dialog">
   <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title">Log out account</h5>
-              <button type="button" (click)="hideLogOutModal()" class="btn-close" data-dismiss="modal">
-              </button>
-          </div>
-          <div class="modal-body">
-              <p>Do you want to log out the account?</p>
-          </div>
-          <div class="modal-footer">
-              <button  (click)="saveLogOutChanges()" class="btn btn-primary">Log out</button>
-              <button type="button" (click)="hideLogOutModal()" class="btn btn-secondary"
-                  data-dismiss="modal">Close</button>
-          </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Log out account</h5>
+        <button type="button" (click)="hideLogOutModal()" class="btn-close" data-dismiss="modal">
+        </button>
       </div>
+      <div class="modal-body">
+        <p>Do you want to log out the account?</p>
+      </div>
+      <div class="modal-footer">
+        <button (click)="saveLogOutChanges()" class="btn btn-primary">Log out</button>
+        <button type="button" (click)="hideLogOutModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
 <!--end:: LogOut-->
-  
