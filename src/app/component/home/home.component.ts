@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import {  Router, RouterModule } from '@angular/router';
 import { ItemService } from '../../services/item.service';
 import { Item } from '../../services/models/item/item';
 import { FormsModule } from '@angular/forms';
@@ -16,10 +16,14 @@ import { ToastrService } from 'ngx-toastr';
     styleUrl: './home.component.less',
 })
 export class HomeComponent implements OnInit {
-    constructor(private toastr: ToastrService) { }
+    //Konstruktor
+    constructor(private toastr: ToastrService) { };
 
-    public page_size: number = 10;
+    //Inject ItemService and Router
+    public itemService: ItemService = inject(ItemService);
+    private router: Router = inject(Router);
 
+    //Variable for loadin
     public loading: boolean = false;
 
     //For ModalWindow Variables
@@ -27,14 +31,13 @@ export class HomeComponent implements OnInit {
     public modalEditVisible: boolean = false;
     public modalAddVisible: boolean = false;
 
-    //For GetItems Variables
-    public itemService: ItemService = inject(ItemService);
+    //For GetItems list
     public items: Item[] = [];
 
     //For Add Variables
     public itemType: number = 0;
     public itemName: string = '';
-    public itemDate: Date = new Date();
+    public itemDate: Date|null=null;
 
     //For Delete, Edit,
     public itemId: number = 0;
@@ -45,12 +48,17 @@ export class HomeComponent implements OnInit {
     public itemDateEdit: Date = new Date();
 
     //For Pagination Variables
+    public page_size: number = 10;
     public currentPage: number = 1;
     public totalPages: number = 1;
     public pagenationData: PaginationData = new PaginationData();
 
-    private router: Router = inject(Router);
+    //Variables For Error
+    public itemNameError:string='';
+    public itemTypeError:string='';
+    public itemDateError:string='';
 
+    //NgOnInit Function
     public ngOnInit(): void {
         this.check_token();
         this.getItems(this.currentPage);
@@ -145,7 +153,7 @@ export class HomeComponent implements OnInit {
     public showAddModal(): void {
         this.itemName = '';
         this.itemType = 0;
-        this.itemDate = new Date();
+        this.itemDate = null;
         this.modalAddVisible = true;
     }
 
@@ -154,6 +162,13 @@ export class HomeComponent implements OnInit {
     }
 
     public saveAddChanges(): void {
+         //Clear errorVariables
+         this.resetErrors();
+        
+         //Validate LoginForm
+         if (!this.validateForm()) {
+             return;
+         }
         this.loading = true;
         const itemCreateModel = new ItemCreate();
         itemCreateModel.itemName = this.itemName;
@@ -193,4 +208,54 @@ export class HomeComponent implements OnInit {
     get pageNumbers(): number[] {
         return Array.from({ length: this.totalPages }, (_, i) => i + 1);
     }
+
+    //Validate AddModal Form
+    
+    //Function Validate LoginForm
+    private validateForm(): boolean {
+        let isValid = true;
+
+        if (!this.itemName) {
+            this.itemNameError = 'Item name is required!';
+            isValid = false;
+        } else if (!this.isValidItemName(this.itemName)) {
+            this.itemNameError = 'Item name is invalid format!';
+            isValid = false;
+        }
+
+        if(!this.itemType){
+            this.itemTypeError='Item type is required!';
+            isValid=false;
+        }else if(!this.isValudItemType(this.itemType)){
+            this.itemTypeError='Item type must be numeric only!';
+            isValid=false;
+        }
+        
+        if(!this.itemDate){
+            this.itemDateError='Item date is requred!'
+            isValid=false;
+        }
+      
+        return isValid;
+    }
+
+    //Function Validate itemName
+    private isValidItemName(name: string): boolean {
+        const nameRegex = /^[a-zA-Z0-9_-]{3,15}$/;
+        return nameRegex.test(name);
+    }
+
+    //Function Validate itemType
+    private isValudItemType(type:number){
+        const typeRegex=/^[0-9]{1,15}$/;
+        return typeRegex.test(type.toString());
+    }
+
+    //FUnction Clear error variables
+    private resetErrors(): void {
+        this.itemNameError = '';
+        this.itemTypeError = '';
+        this.itemDateError='';
+    }
+
 }

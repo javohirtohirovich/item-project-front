@@ -100,19 +100,19 @@
                         <form>
                             <div class="form-row">
                                 <div class="col-md-12 mb-3">
-                                    <label for="validationDefault01">Item name</label>
-                                    <input type="text" class="form-control" id="validationDefault01" [(ngModel)]="itemNameEdit" name="itemName"
-                                        placeholder="Item name" required>
+                                    <label for="name">Item name</label>
+                                    <input type="text" class="form-control" [(ngModel)]="itemNameEdit" name="itemNameEdit"
+                                        placeholder="Item name" id="name" required>
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <label for="validationDefault02">Item type</label>
-                                    <input type="number" class="form-control" id="validationDefault02" [(ngModel)]="itemTypeEdit" name="itemType"
-                                        placeholder="Item type" required>
+                                    <label for="type">Item type</label>
+                                    <input type="number" class="form-control" [(ngModel)]="itemTypeEdit" name="itemTypeEdit"
+                                        placeholder="Item type" id="type" required>
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <label for="validationDefault03">Item date</label>
-                                    <input type="date" class="form-control" id="validationDefault03" [(ngModel)]="itemDateEdit" name="itemDate"
-                                        placeholder="Item date" required>
+                                    <label for="date">Item date</label>
+                                    <input type="date" class="form-control"  [(ngModel)]="itemDateEdit" name="itemDateEdit"
+                                       id="date" required>
                                 </div>
                             </div>
                         </form>
@@ -147,19 +147,19 @@
                                     <label for="validationDefault01">Item name</label>
                                     <input type="text" class="form-control" id="validationDefault01"
                                         placeholder="Item name" [(ngModel)]="itemName" name="itemName" required>
-                                    <!-- Add the 'name' attribute -->
+                                    <div class="text-danger error-message" *ngIf="itemNameError">{{ itemNameError }}</div>
                                 </div>
                                 <div class=" col-md-12 mb-3">
                                     <label for="validationDefault02">Item type</label>
                                     <input type="number" class="form-control" id="validationDefault02"
                                         placeholder="Item type" [(ngModel)]="itemType" name="itemType" required>
-                                    <!-- Add the 'name' attribute -->
+                                    <div class="text-danger error-message" *ngIf="itemTypeError">{{ itemTypeError }}</div>
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label for="validationDefault03">Item date</label>
                                     <input type="date" class="form-control" id="validationDefault03"
                                         placeholder="Item date" [(ngModel)]="itemDate" name="itemDate" required>
-                                    <!-- Add the 'name' attribute -->
+                                    <div class="text-danger error-message" *ngIf="itemDateError">{{ itemDateError }}</div>
                                 </div>
                             </div>
                         </form>
