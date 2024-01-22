@@ -117,6 +117,8 @@ export class HomeComponent implements OnInit {
         itemTypeEdit: number,
         itemDateEdit: Date
     ): void {
+         //Clear errorVariables
+         this.resetErrors();
         this.itemId = itemId;
         this.itemNameEdit = itemNameEdit;
         this.itemTypeEdit = itemTypeEdit;
@@ -130,6 +132,13 @@ export class HomeComponent implements OnInit {
     }
 
     public saveEditChanges(): void {
+          //Clear errorVariables
+          this.resetErrors();
+        
+          //Validate LoginForm
+          if (!this.validateForm(this.itemNameEdit,this.itemTypeEdit,this.itemDateEdit)) {
+              return;
+         }
         this.loading = true;
         const itemModel = new Item();
         itemModel.itemId = this.itemId;
@@ -151,6 +160,8 @@ export class HomeComponent implements OnInit {
 
     //Add Modal Function
     public showAddModal(): void {
+         //Clear errorVariables
+         this.resetErrors();
         this.itemName = '';
         this.itemType = 0;
         this.itemDate = null;
@@ -166,9 +177,9 @@ export class HomeComponent implements OnInit {
          this.resetErrors();
         
          //Validate LoginForm
-         if (!this.validateForm()) {
+         if (!this.validateForm(this.itemName,this.itemType,this.itemDate)) {
              return;
-         }
+        }
         this.loading = true;
         const itemCreateModel = new ItemCreate();
         itemCreateModel.itemName = this.itemName;
@@ -212,26 +223,26 @@ export class HomeComponent implements OnInit {
     //Validate AddModal Form
     
     //Function Validate LoginForm
-    private validateForm(): boolean {
+    private validateForm(itemName:string,itemType:number,itemDate:Date|null): boolean {
         let isValid = true;
 
-        if (!this.itemName) {
+        if (!itemName) {
             this.itemNameError = 'Item name is required!';
             isValid = false;
-        } else if (!this.isValidItemName(this.itemName)) {
+        } else if (!this.isValidItemName(itemName)) {
             this.itemNameError = 'Item name is invalid format!';
             isValid = false;
         }
 
-        if(!this.itemType){
+        if(!itemType){
             this.itemTypeError='Item type is required!';
             isValid=false;
-        }else if(!this.isValudItemType(this.itemType)){
+        }else if(!this.isValudItemType(itemType)){
             this.itemTypeError='Item type must be numeric only!';
             isValid=false;
         }
         
-        if(!this.itemDate){
+        if(!itemDate){
             this.itemDateError='Item date is requred!'
             isValid=false;
         }

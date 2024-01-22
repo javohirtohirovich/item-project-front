@@ -103,16 +103,19 @@
                                     <label for="name">Item name</label>
                                     <input type="text" class="form-control" [(ngModel)]="itemNameEdit" name="itemNameEdit"
                                         placeholder="Item name" id="name" required>
+                                    <div class="text-danger error-message" *ngIf="itemNameError">{{ itemNameError }}</div>
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label for="type">Item type</label>
                                     <input type="number" class="form-control" [(ngModel)]="itemTypeEdit" name="itemTypeEdit"
                                         placeholder="Item type" id="type" required>
+                                    <div class="text-danger error-message" *ngIf="itemTypeError">{{ itemTypeError }}</div>
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label for="date">Item date</label>
                                     <input type="date" class="form-control"  [(ngModel)]="itemDateEdit" name="itemDateEdit"
                                        id="date" required>
+                                    <div class="text-danger error-message" *ngIf="itemDateError">{{ itemDateError }}</div>
                                 </div>
                             </div>
                         </form>
