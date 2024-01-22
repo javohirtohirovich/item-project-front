@@ -10,7 +10,7 @@ import { Toast, ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [RouterModule, CommonModule, FormsModule,LoadingComponent,ReactiveFormsModule],
+  imports: [RouterModule, CommonModule, FormsModule,LoadingComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.less',
 })
@@ -18,7 +18,7 @@ export class RegisterComponent {
   
   private userService: UserService = inject(UserService);
   
-  constructor(private toastr: ToastrService,public formRegister:FormGroup) {}  
+  constructor(private toastr: ToastrService) {}  
   private router: Router = inject(Router);
   
   public userName: string = '';
