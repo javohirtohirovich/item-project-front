@@ -8,7 +8,7 @@
                 <label for="email" class="form-label">Email address</label>
                 <input type="email" [(ngModel)]="userEmail" name="userEmail" class="form-control"
                     placeholder="email@gmail.com" id="email" required />
-                <div class="text-danger" *ngIf="emailError">{{ emailError }}</div>
+                <div class="text-danger error-message" *ngIf="emailError">{{ emailError }}</div>
             </div>
             <!--end::Email group -->
 
@@ -17,7 +17,7 @@
                 <label for="password" class="form-label">Password</label>
                 <input type="password" [(ngModel)]="password" name="password" class="form-control" id="password"
                     placeholder="Password" required />
-                <div class="text-danger" *ngIf="passwordError">{{ passwordError }}</div>
+                <div class="text-danger error-message" *ngIf="passwordError">{{ passwordError }}</div>
             </div>
             <!--end::Password Input -->
 
