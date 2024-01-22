@@ -44,7 +44,7 @@ export class LoginComponent {
             return;
         }
 
-        //UserLoginModel to fill
+        //populate UserLoginModel with variables
         const userLoginModel = new UserLogin();
         userLoginModel.clientId = 0;
         userLoginModel.grantType = 'password';
