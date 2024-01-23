@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule, DatePipe, formatDate } from '@angular/common';
+import { Component, OnInit, Pipe, inject } from '@angular/core';
 import {  Router, RouterModule } from '@angular/router';
 import { ItemService } from '../../services/item.service';
 import { Item } from '../../services/models/item/item';
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [CommonModule, RouterModule, FormsModule, LoadingComponent],
+    imports: [CommonModule, RouterModule, FormsModule, LoadingComponent,DatePipe],
     templateUrl: './home.component.html',
     styleUrl: './home.component.less',
 })
@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
     public itemService: ItemService = inject(ItemService);
     private router: Router = inject(Router);
 
+    private pipeDate= DatePipe;
     //Variable for loadin
     public loading: boolean = false;
 
@@ -45,7 +46,7 @@ export class HomeComponent implements OnInit {
     //For Edit Variables
     public itemTypeEdit: number = 0;
     public itemNameEdit: string = '';
-    public itemDateEdit: Date = new Date();
+    public itemDateEdit: any = new Date();
 
     //For Pagination Variables
     public page_size: number = 10;
@@ -112,12 +113,12 @@ export class HomeComponent implements OnInit {
         itemTypeEdit: number,
         itemDateEdit: Date
     ): void {
+        debugger;
          //Clear errorVariables
          this.resetErrors();
         this.itemId = itemId;
         this.itemNameEdit = itemNameEdit;
         this.itemTypeEdit = itemTypeEdit;
-        this.itemDateEdit = itemDateEdit;
 
         this.modalEditVisible = true;
     }

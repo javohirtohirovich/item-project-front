@@ -161,7 +161,8 @@
                                 <div class="col-md-12 mb-3">
                                     <label for="validationDefault03">Item date</label>
                                     <input type="datetime-local" class="form-control" id="validationDefault03"
-                                        placeholder="Item date" [(ngModel)]="itemDate" name="itemDate" required>
+                                        placeholder="Item date"  [(ngModel)]="itemDate" name="itemDate" required>
+
                                     <div class="text-danger error-message" *ngIf="itemDateError">{{ itemDateError }}</div>
                                 </div>
                             </div>
