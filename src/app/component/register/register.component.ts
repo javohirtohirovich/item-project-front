@@ -127,7 +127,7 @@ export class RegisterComponent {
 
     //Function Validate email
     private isValidEmail(email: string): boolean {
-        const emailRegex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
+        const emailRegex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(email);
     }
 
