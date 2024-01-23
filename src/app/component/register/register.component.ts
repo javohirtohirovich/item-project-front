@@ -43,14 +43,14 @@ export class RegisterComponent {
     //Function for register
     public registerUser(): void {
 
-         //Clear errorVariables
-         this.resetErrors();
-        
-         //Validate LoginForm
-         if (!this.validateForm()) {
-             return;
-         }
- 
+        //Clear errorVariables
+        this.resetErrors();
+
+        //Validate LoginForm
+        if (!this.validateForm()) {
+            return;
+        }
+
         //Loading turn on
         this.loading = true;
         //populate UserRegister with variables
@@ -67,8 +67,14 @@ export class RegisterComponent {
                 this.router.navigate(["/login"])
             },
             error: (err) => {
-                this.toastr.warning("Error during register!");
-                this.loading = false;
+                if (err.status == 403) {
+                    this.toastr.warning('Already exsist this email!')
+                    this.loading=false;
+                }
+                else {
+                    this.toastr.warning("Error during register!");
+                    this.loading = false;
+                }
             },
         });
 
@@ -104,8 +110,8 @@ export class RegisterComponent {
             2) At least one lowercase letter (a-z).</br>
             3) At least one number (0-9).</br>
             4) At least one special character (#, ?, !, @, $, %, ^, &, *, -).</br>
-            5) At least 8 characters.`,'', { closeButton: true, timeOut: 7000, progressBar: true, enableHtml:true,positionClass:'toast-bottom-right', })
-            isValid=false;
+            5) At least 8 characters.`, '', { closeButton: true, timeOut: 7000, progressBar: true, enableHtml: true, positionClass: 'toast-bottom-right', })
+            isValid = false;
         }
 
         if (!this.passwordConfirm) {
@@ -113,7 +119,7 @@ export class RegisterComponent {
             isValid = false;
         } else if (!this.isValidPasswordsMatch(this.password, this.passwordConfirm)) {
             this.passwordErrorConfirm = 'Passwords is not Match!'
-            isValid=false;
+            isValid = false;
         }
 
         return isValid;

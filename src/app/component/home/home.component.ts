@@ -232,10 +232,7 @@ export class HomeComponent implements OnInit {
         if (!itemName) {
             this.itemNameError = 'Item name is required!';
             isValid = false;
-        } else if (!this.isValidItemName(itemName)) {
-            this.itemNameError = 'Item name is invalid format!';
-            isValid = false;
-        }
+        } 
 
         if(!itemType){
             this.itemTypeError='Item type is required!';
@@ -261,7 +258,7 @@ export class HomeComponent implements OnInit {
 
     //Function Validate itemType
     private isValudItemType(type:number){
-        const typeRegex=/^[0-9]{1,15}$/;
+        const typeRegex=/^[0-9]{1,30}$/;
         return typeRegex.test(type.toString());
     }
 
