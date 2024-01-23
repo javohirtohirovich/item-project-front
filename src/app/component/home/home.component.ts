@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit {
 
     //For Delete, Edit,
     public itemId: number = 0;
+    public itemNumber:number=0;
 
     //For Edit Variables
     public itemTypeEdit: number = 0;
@@ -81,8 +82,9 @@ export class HomeComponent implements OnInit {
     }
 
     //Delete Modal Function
-    public showDeleteModal(itemId: number): void {
+    public showDeleteModal(itemId: number,itemNumber:number): void {
         this.itemId = itemId;
+        this.itemNumber=itemNumber;
         this.modalDeleteVisible = true;
     }
 
@@ -92,16 +94,21 @@ export class HomeComponent implements OnInit {
 
     public saveDeleteChanges(): void {
         this.loading = true;
+       
         this.itemService.deleteItem(this.itemId).subscribe({
             next: (response) => {
+                if(this.itemNumber%10==1){
+                    this.currentPage-=1;
+                }
                 this.getItems(this.currentPage);
                 this.toastr.success('Success delete item!');
             },
             error: (err) => {
+                this.getItems(this.currentPage);
                 this.toastr.warning('Error during delete!');
             },
         });
-        this.getItems(this.currentPage);
+        
         this.loading = false;
         this.modalDeleteVisible = false;
     }
@@ -119,7 +126,7 @@ export class HomeComponent implements OnInit {
         this.itemId = itemId;
         this.itemNameEdit = itemNameEdit;
         this.itemTypeEdit = itemTypeEdit;
-
+        this.itemDateEdit=formatDate(itemDateEdit,"yyyy-MM-ddThh:mm","en");
         this.modalEditVisible = true;
     }
 
@@ -248,7 +255,7 @@ export class HomeComponent implements OnInit {
 
     //Function Validate itemName
     private isValidItemName(name: string): boolean {
-        const nameRegex = /^[a-zA-Z0-9_-]{3,15}$/;
+        const nameRegex = /^[ a-zA-Z0-9_-]{3,15}$/;
         return nameRegex.test(name);
     }
 
