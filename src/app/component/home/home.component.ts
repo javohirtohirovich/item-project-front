@@ -53,6 +53,7 @@ export class HomeComponent implements OnInit {
     public page_size: number = 10;
     public currentPage: number = 1;
     public totalPages: number = 1;
+    public totalItems: number=0;
     public pagenationData: PaginationData = new PaginationData();
 
     //Variables For Error
@@ -77,6 +78,7 @@ export class HomeComponent implements OnInit {
             this.items = response.items;
             this.pagenationData = response.paginationMetaData;
             this.totalPages = response.paginationMetaData.totalPages;
+            this.totalItems=response.paginationMetaData.totalItems;
             this.loading = false;
         });
     }
@@ -97,7 +99,7 @@ export class HomeComponent implements OnInit {
        
         this.itemService.deleteItem(this.itemId).subscribe({
             next: (response) => {
-                if(this.itemNumber%10==1){
+                if(this.totalItems%10==1){
                     this.currentPage-=1;
                 }
                 this.getItems(this.currentPage);
@@ -248,12 +250,6 @@ export class HomeComponent implements OnInit {
         }
       
         return isValid;
-    }
-
-    //Function Validate itemName
-    private isValidItemName(name: string): boolean {
-        const nameRegex = /^[ a-zA-Z0-9_-]{3,15}$/;
-        return nameRegex.test(name);
     }
 
     //Function Validate itemType
